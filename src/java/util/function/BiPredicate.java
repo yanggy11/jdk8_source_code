@@ -27,17 +27,15 @@ package java.util.function;
 import java.util.Objects;
 
 /**
- * Represents a predicate (boolean-valued function) of two arguments.  This is
- * the two-arity specialization of {@link Predicate}.
- *
- * <p>This is a <a href="package-summary.html">functional interface</a>
- * whose functional method is {@link #test(Object, Object)}.
+ *  BiPredicate 用于判定两个输入值是否符合条件，如判断a是否大于b
+     (x,y) -> {
+        return x > y;
+     }
  *
  * @param <T> the type of the first argument to the predicate
  * @param <U> the type of the second argument the predicate
  *
  * @see Predicate
- * @since 1.8
  */
 @FunctionalInterface
 public interface BiPredicate<T, U> {

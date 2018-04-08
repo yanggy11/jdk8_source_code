@@ -27,24 +27,19 @@ package java.util.function;
 import java.util.Objects;
 
 /**
- * Represents a function that accepts one argument and produces a result.
+ * Function表示接受一个参数并且产生一个结果的函数
  *
- * <p>This is a <a href="package-summary.html">functional interface</a>
- * whose functional method is {@link #apply(Object)}.
- *
- * @param <T> the type of the input to the function
- * @param <R> the type of the result of the function
- *
- * @since 1.8
+ * @param <T> 函数参数
+ * @param <R> 函数返回的结果
  */
 @FunctionalInterface
 public interface Function<T, R> {
 
     /**
-     * Applies this function to the given argument.
+     * 将函数应用于给定的值
      *
-     * @param t the function argument
-     * @return the function result
+     * @param t 入参
+     * @return 函数返回值
      */
     R apply(T t);
 
@@ -89,10 +84,10 @@ public interface Function<T, R> {
     }
 
     /**
-     * Returns a function that always returns its input argument.
+     * 返回输入值的函数
      *
-     * @param <T> the type of the input and output objects to the function
-     * @return a function that always returns its input argument
+     * @param <T> 输入输出值的类型
+     * @return 函数
      */
     static <T> Function<T, T> identity() {
         return t -> t;

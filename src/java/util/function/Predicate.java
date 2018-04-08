@@ -29,6 +29,8 @@ import java.util.Objects;
 /**
  * Represents a predicate (boolean-valued function) of one argument.
  *
+ * 用于判定值是否满足条件
+ *
  * <p>This is a <a href="package-summary.html">functional interface</a>
  * whose functional method is {@link #test(Object)}.
  *
@@ -40,29 +42,18 @@ import java.util.Objects;
 public interface Predicate<T> {
 
     /**
-     * Evaluates this predicate on the given argument.
      *
-     * @param t the input argument
-     * @return {@code true} if the input argument matches the predicate,
-     * otherwise {@code false}
+     * 判定给定的值是否符合定义的条件
+     *
+     * @param t   输入变量
+     * @return 如果t符合predicate条件，则返回true,否则返回false
      */
     boolean test(T t);
 
     /**
-     * Returns a composed predicate that represents a short-circuiting logical
-     * AND of this predicate and another.  When evaluating the composed
-     * predicate, if this predicate is {@code false}, then the {@code other}
-     * predicate is not evaluated.
-     *
-     * <p>Any exceptions thrown during evaluation of either predicate are relayed
-     * to the caller; if evaluation of this predicate throws an exception, the
-     * {@code other} predicate will not be evaluated.
-     *
-     * @param other a predicate that will be logically-ANDed with this
-     *              predicate
-     * @return a composed predicate that represents the short-circuiting logical
-     * AND of this predicate and the {@code other} predicate
-     * @throws NullPointerException if other is null
+     * and 条件
+     * @return 返回包含other条件的Predicate对象
+     * @throws NullPointerException  若{null == other}， 则抛出空异常
      */
     default Predicate<T> and(Predicate<? super T> other) {
         Objects.requireNonNull(other);
@@ -70,31 +61,17 @@ public interface Predicate<T> {
     }
 
     /**
-     * Returns a predicate that represents the logical negation of this
-     * predicate.
-     *
-     * @return a predicate that represents the logical negation of this
-     * predicate
+     * 取反操作
+     * @return 返回与之前条件相反的Predicate对象
      */
     default Predicate<T> negate() {
         return (t) -> !test(t);
     }
 
     /**
-     * Returns a composed predicate that represents a short-circuiting logical
-     * OR of this predicate and another.  When evaluating the composed
-     * predicate, if this predicate is {@code true}, then the {@code other}
-     * predicate is not evaluated.
-     *
-     * <p>Any exceptions thrown during evaluation of either predicate are relayed
-     * to the caller; if evaluation of this predicate throws an exception, the
-     * {@code other} predicate will not be evaluated.
-     *
-     * @param other a predicate that will be logically-ORed with this
-     *              predicate
-     * @return a composed predicate that represents the short-circuiting logical
-     * OR of this predicate and the {@code other} predicate
-     * @throws NullPointerException if other is null
+     * or 条件
+     * @return 返回包含other条件的Predicate对象
+     * @throws NullPointerException  若{null == other}， 则抛出空异常
      */
     default Predicate<T> or(Predicate<? super T> other) {
         Objects.requireNonNull(other);
@@ -102,14 +79,11 @@ public interface Predicate<T> {
     }
 
     /**
-     * Returns a predicate that tests if two arguments are equal according
-     * to {@link Objects#equals(Object, Object)}.
+     * 返回根据{@link Objects#equals(Object, Object)}方法判断两对象是否相等的Predicate对象
      *
-     * @param <T> the type of arguments to the predicate
-     * @param targetRef the object reference with which to compare for equality,
-     *               which may be {@code null}
-     * @return a predicate that tests if two arguments are equal according
-     * to {@link Objects#equals(Object, Object)}
+     * @param <T> Predicate对象泛型参数类型
+     * @param targetRef 入参
+     * @return 返回判断两对象是否相等的Predicate对象
      */
     static <T> Predicate<T> isEqual(Object targetRef) {
         return (null == targetRef)

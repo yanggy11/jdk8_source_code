@@ -1,0 +1,70 @@
+1.Predicate  BiPredicate
+  Predicate用于判定一个输入值是否符合条件，如判断数值大于某个值
+  (x) -> {
+    check...
+    return true | false;
+  }
+  ```
+            /**
+             * 判断数字是否大于10
+             */
+            Predicate<Integer> predicate = (e) -> {
+                return e > 15;
+            };
+  ```
+
+  BiPredicate 用于判定两个输入值是否符合条件，如判断a是否大于b
+  (x,y) -> {
+        return x > y;
+   }
+2.Function   BiFunction
+  (x) -> y
+  Function表示输入一个参数并且输出一个结果的函数，如对象转换,student对象转换成StudentDto
+  ```
+                Function<Student, StudentDto> function = (stu -> {
+                    StudentDto studentDto = new StudentDto();
+                    studentDto.setStuId(stu.getId());
+                    studentDto.setStuAge(stu.getStuAge());
+                    studentDto.setStuName(stu.getStuName());
+                    studentDto.setStuNo(stu.getStuNo());
+                    return studentDto;
+                });
+
+                Student student = new Student();
+                student.setId(1);
+                student.setStuAge(14);
+                student.setStuNo("No.0001");
+                student.setStuName("derrick");
+
+                function.apply(student);
+  ```
+3.Consumer   BiConsumer
+
+  (x) -> {
+        do sth;
+   }
+  Consumer对输入的数据进行特定操作，无返回值，如输入学生生日，计算学生年龄
+  ```
+            Consumer<Student> consumer = (stu -> {
+                if(predicate.test(stu.getStuAge())) {
+                    stu.setFee(100);
+                }else {
+                    stu.setFee(50);
+                }
+            });
+
+            consumer.accept(student);
+  ```
+4.Supplier   BiSupplier
+    () -> {
+        return x;
+    }
+    无输入数据，返回一个类型为T的值。
+
+    ```
+                Supplier<Integer> supplier = () -> {
+                    return 20;
+                };
+
+                System.out.println(supplier.get());
+    ```
