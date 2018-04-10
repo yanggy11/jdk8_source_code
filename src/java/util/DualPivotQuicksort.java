@@ -108,7 +108,7 @@ final class DualPivotQuicksort {
                      int[] work, int workBase, int workLen) {
         // Use Quicksort on small arrays
         if (right - left < QUICKSORT_THRESHOLD) {
-            sort(a, left, right, true);
+            sort(a, left, right, true); //快速排序
             return;
         }
 

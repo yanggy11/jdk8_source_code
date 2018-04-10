@@ -45,7 +45,7 @@ import java.util.Comparator;
 @FunctionalInterface
 public interface BinaryOperator<T> extends BiFunction<T,T,T> {
     /**
-     * Returns a {@link BinaryOperator} which returns the lesser of two elements
+     * 返回一个操作，这个操作的结果是返回两者中较小的一个。
      * according to the specified {@code Comparator}.
      *
      * @param <T> the type of the input arguments of the comparator
@@ -60,7 +60,7 @@ public interface BinaryOperator<T> extends BiFunction<T,T,T> {
     }
 
     /**
-     * Returns a {@link BinaryOperator} which returns the greater of two elements
+     * 返回一个操作，这个操作的结果是返回两者中较大的一个。
      * according to the specified {@code Comparator}.
      *
      * @param <T> the type of the input arguments of the comparator

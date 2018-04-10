@@ -41,7 +41,7 @@ package java.util.function;
 public interface IntSupplier {
 
     /**
-     * Gets a result.
+     * 返回一个整数
      *
      * @return a result
      */

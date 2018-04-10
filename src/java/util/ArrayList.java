@@ -109,7 +109,7 @@ public class ArrayList<E> extends AbstractList<E>
     private static final long serialVersionUID = 8683452581122892189L;
 
     /**
-     * Default initial capacity.
+     * 数组初始化默认长度
      */
     private static final int DEFAULT_CAPACITY = 10;
 
@@ -126,60 +126,55 @@ public class ArrayList<E> extends AbstractList<E>
     private static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = {};
 
     /**
-     * The array buffer into which the elements of the ArrayList are stored.
-     * The capacity of the ArrayList is the length of this array buffer. Any
-     * empty ArrayList with elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA
-     * will be expanded to DEFAULT_CAPACITY when the first element is added.
+     * 数组缓冲区，ArrayList列表元素存储于此。数组的长度就是ArrayList的capacity。
+     * 当第一个元素保存到{elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA}中时，数组
+     * 的长度增加到{DEFAULT_CAPACITY}即 10.
      */
     transient Object[] elementData; // non-private to simplify nested class access
 
     /**
-     * The size of the ArrayList (the number of elements it contains).
-     *
-     * @serial
+     * elementData中元素的数量。
+     * 区别于capacity，capacity是ArrayList最大能够容纳的元素数量，size是当前存在的元素数量
      */
     private int size;
 
     /**
-     * Constructs an empty list with the specified initial capacity.
+     * 用指定的capacity初始化ArrayList。
      *
-     * @param  initialCapacity  the initial capacity of the list
-     * @throws IllegalArgumentException if the specified initial capacity
-     *         is negative
+     * @param  initialCapacity  初始化容量
+     * @throws IllegalArgumentException initialCapacity < 0，抛出异常
      */
     public ArrayList(int initialCapacity) {
-        if (initialCapacity > 0) {
+        if (initialCapacity > 0) { //大于0，new 一个Object数组，长度为initialCapacity
             this.elementData = new Object[initialCapacity];
-        } else if (initialCapacity == 0) {
+        } else if (initialCapacity == 0) { // == 0,将EMPTY_ELEMENTDATA数组赋值给elementData
             this.elementData = EMPTY_ELEMENTDATA;
-        } else {
+        } else { //< 0, 抛异常
             throw new IllegalArgumentException("Illegal Capacity: "+
                                                initialCapacity);
         }
     }
 
     /**
-     * Constructs an empty list with an initial capacity of ten.
+     * 构建初始化容量为10的List
      */
     public ArrayList() {
         this.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;
     }
 
     /**
-     * Constructs a list containing the elements of the specified
-     * collection, in the order they are returned by the collection's
-     * iterator.
+     * 用指定的集合初始化List
      *
      * @param c the collection whose elements are to be placed into this list
      * @throws NullPointerException if the specified collection is null
      */
     public ArrayList(Collection<? extends E> c) {
         elementData = c.toArray();
-        if ((size = elementData.length) != 0) {
+        if ((size = elementData.length) != 0) { //c.size > 0
             // c.toArray might (incorrectly) not return Object[] (see 6260652)
             if (elementData.getClass() != Object[].class)
                 elementData = Arrays.copyOf(elementData, size, Object[].class);
-        } else {
+        } else {//c.size == 0,初始化为空
             // replace with empty array.
             this.elementData = EMPTY_ELEMENTDATA;
         }
@@ -200,20 +195,18 @@ public class ArrayList<E> extends AbstractList<E>
     }
 
     /**
-     * Increases the capacity of this <tt>ArrayList</tt> instance, if
-     * necessary, to ensure that it can hold at least the number of elements
-     * specified by the minimum capacity argument.
-     *
+     * 扩容操作
      * @param   minCapacity   the desired minimum capacity
      */
     public void ensureCapacity(int minCapacity) {
+
+        //最小扩容
         int minExpand = (elementData != DEFAULTCAPACITY_EMPTY_ELEMENTDATA)
             // any size if not default element table
             ? 0
             // larger than default for default empty table. It's already
             // supposed to be at default size.
             : DEFAULT_CAPACITY;
-
         if (minCapacity > minExpand) {
             ensureExplicitCapacity(minCapacity);
         }
@@ -231,28 +224,26 @@ public class ArrayList<E> extends AbstractList<E>
         modCount++;
 
         // overflow-conscious code
+        //扩容量大于数组元素数量
         if (minCapacity - elementData.length > 0)
             grow(minCapacity);
     }
 
     /**
-     * The maximum size of array to allocate.
-     * Some VMs reserve some header words in an array.
-     * Attempts to allocate larger arrays may result in
-     * OutOfMemoryError: Requested array size exceeds VM limit
+     * List最大容量
+     * OutOfMemoryError: list元素数量超出虚拟机限制
      */
     private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 
     /**
-     * Increases the capacity to ensure that it can hold at least the
-     * number of elements specified by the minimum capacity argument.
+     * 扩容
      *
      * @param minCapacity the desired minimum capacity
      */
     private void grow(int minCapacity) {
         // overflow-conscious code
-        int oldCapacity = elementData.length;
-        int newCapacity = oldCapacity + (oldCapacity >> 1);
+        int oldCapacity = elementData.length; //原数组容量
+        int newCapacity = oldCapacity + (oldCapacity >> 1); //新容量 = 原数组容量 * 1.5
         if (newCapacity - minCapacity < 0)
             newCapacity = minCapacity;
         if (newCapacity - MAX_ARRAY_SIZE > 0)
@@ -270,7 +261,7 @@ public class ArrayList<E> extends AbstractList<E>
     }
 
     /**
-     * Returns the number of elements in this list.
+     * 返回数组元素数量
      *
      * @return the number of elements in this list
      */
@@ -279,9 +270,7 @@ public class ArrayList<E> extends AbstractList<E>
     }
 
     /**
-     * Returns <tt>true</tt> if this list contains no elements.
-     *
-     * @return <tt>true</tt> if this list contains no elements
+     * 是否为空，若空返回TRUE，不为空返回FALSE
      */
     public boolean isEmpty() {
         return size == 0;
@@ -341,6 +330,8 @@ public class ArrayList<E> extends AbstractList<E>
     }
 
     /**
+     *
+     * 浅拷贝
      * Returns a shallow copy of this <tt>ArrayList</tt> instance.  (The
      * elements themselves are not copied.)
      *
@@ -419,7 +410,7 @@ public class ArrayList<E> extends AbstractList<E>
     }
 
     /**
-     * Returns the element at the specified position in this list.
+     * 获取index位置的元素
      *
      * @param  index index of the element to return
      * @return the element at the specified position in this list
@@ -432,8 +423,7 @@ public class ArrayList<E> extends AbstractList<E>
     }
 
     /**
-     * Replaces the element at the specified position in this list with
-     * the specified element.
+     * 将index位置的元素替换成element.
      *
      * @param index index of the element to replace
      * @param element element to be stored at the specified position
@@ -449,7 +439,7 @@ public class ArrayList<E> extends AbstractList<E>
     }
 
     /**
-     * Appends the specified element to the end of this list.
+     * 将e添加到列表尾部
      *
      * @param e element to be appended to this list
      * @return <tt>true</tt> (as specified by {@link Collection#add})
@@ -461,9 +451,9 @@ public class ArrayList<E> extends AbstractList<E>
     }
 
     /**
-     * Inserts the specified element at the specified position in this
-     * list. Shifts the element currently at that position (if any) and
-     * any subsequent elements to the right (adds one to their indices).
+     * 在index位置插入新元素element，index后的元素右移
+     *
+     * 先将index后的元素右移，然后赋值
      *
      * @param index index at which the specified element is to be inserted
      * @param element element to be inserted
@@ -473,16 +463,17 @@ public class ArrayList<E> extends AbstractList<E>
         rangeCheckForAdd(index);
 
         ensureCapacityInternal(size + 1);  // Increments modCount!!
+        //index位置后的元素均向右移动一位
         System.arraycopy(elementData, index, elementData, index + 1,
                          size - index);
+
+        //index位置处插入新元素
         elementData[index] = element;
         size++;
     }
 
     /**
-     * Removes the element at the specified position in this list.
-     * Shifts any subsequent elements to the left (subtracts one from their
-     * indices).
+     * 移除index位置上的元素，index位置后的元素均向左移动一位。
      *
      * @param index the index of the element to be removed
      * @return the element that was removed from the list
@@ -495,9 +486,10 @@ public class ArrayList<E> extends AbstractList<E>
         E oldValue = elementData(index);
 
         int numMoved = size - index - 1;
-        if (numMoved > 0)
+        if (numMoved > 0) //元素左移一位
             System.arraycopy(elementData, index+1, elementData, index,
                              numMoved);
+        //将size位置上的元素置为null，此处元素已经无用
         elementData[--size] = null; // clear to let GC do its work
 
         return oldValue;
@@ -547,8 +539,7 @@ public class ArrayList<E> extends AbstractList<E>
     }
 
     /**
-     * Removes all of the elements from this list.  The list will
-     * be empty after this call returns.
+     * 清空list
      */
     public void clear() {
         modCount++;
@@ -836,6 +827,8 @@ public class ArrayList<E> extends AbstractList<E>
 
     /**
      * An optimized version of AbstractList.Itr
+     *
+     * 类似于游标
      */
     private class Itr implements Iterator<E> {
         int cursor;       // index of next element to return
@@ -853,7 +846,7 @@ public class ArrayList<E> extends AbstractList<E>
             if (i >= size)
                 throw new NoSuchElementException();
             Object[] elementData = ArrayList.this.elementData;
-            if (i >= elementData.length)
+            if (i >= elementData.length) //多线程同时操作会出现这个问题
                 throw new ConcurrentModificationException();
             cursor = i + 1;
             return (E) elementData[lastRet = i];
@@ -874,6 +867,10 @@ public class ArrayList<E> extends AbstractList<E>
             }
         }
 
+        /**
+         * Consumer 接收一个参数，执行一个操作，无返回值
+         * @param consumer
+         */
         @Override
         @SuppressWarnings("unchecked")
         public void forEachRemaining(Consumer<? super E> consumer) {

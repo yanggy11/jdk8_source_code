@@ -68,3 +68,11 @@
 
                 System.out.println(supplier.get());
     ```
+
+5.BinaryOperator
+
+传入同类型的两个值，返回与参数同类型的结果。
+
+T result = (T x, T y)-> {
+    return  z;
+}
