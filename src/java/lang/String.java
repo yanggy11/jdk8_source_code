@@ -223,7 +223,7 @@ public final class String
      *         The initial offset
      *
      * @param  count
-     *         The length
+     *         The
      *
      * @throws  IllegalArgumentException
      *          If any invalid Unicode code point is found in {@code
